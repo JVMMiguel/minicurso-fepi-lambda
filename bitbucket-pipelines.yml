@@ -1,0 +1,78 @@
+image:
+  name: openjdk:17
+
+clone:
+  depth: full
+
+definitions:
+  steps:
+    - step: &build-ci
+        name: Build Project
+        caches:
+          - gradle
+        script:
+          - gradle clean build -x test --no-daemon
+    - step: &build
+        name: Build Project to Deploy
+        caches:
+          - gradle
+        script:
+          - ./gradlew clean shadowJar
+        artifacts:
+          download: false
+          paths:
+            - build/libs/*-all.jar
+pipelines:
+  default:
+    - parallel:
+        steps:
+          - step: *build-ci
+  branches:
+    develop:
+      - parallel:
+          steps:
+            - step: *build
+      - step:
+          deployment: dev
+          name: Deploy to Development
+          script:
+            - pipe: atlassian/aws-lambda-deploy:1.12.0
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID_DEV
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY_DEV
+                AWS_DEFAULT_REGION: $AWS_REGION
+                FUNCTION_NAME: $LAMBDA_FUNCTION_NAME_DEV
+                COMMAND: 'update'
+                ZIP_FILE: 'build/libs/send-email-function-0.0.1-SNAPSHOT-all.jar'
+    qas:
+      - parallel:
+          steps:
+            - step: *build
+      - step:
+          deployment: qas
+          name: Deploy to Staging
+          script:
+            - pipe: atlassian/aws-lambda-deploy:1.12.0
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID_QAS
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY_QAS
+                AWS_DEFAULT_REGION: $AWS_REGION
+                FUNCTION_NAME: $LAMBDA_FUNCTION_NAME_QAS
+                COMMAND: 'update'
+                ZIP_FILE: 'build/libs/send-email-function-0.0.1-SNAPSHOT-all.jar'
+    master:
+      - parallel:
+          steps:
+            - step: *build
+      - step:
+          deployment: prod
+          name: Deploy to Production
+          script:
+            - pipe: atlassian/aws-lambda-deploy:1.12.0
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID_PROD
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY_PROD
+                AWS_DEFAULT_REGION: $AWS_REGION
+                FUNCTION_NAME: $LAMBDA_FUNCTION_NAME_PROD
+                COMMAND: 'update'
+                ZIP_FILE: 'build/libs/send-email-function-0.0.1-SNAPSHOT-all.jar'
