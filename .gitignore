@@ -12,7 +12,7 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
+#*.jar Commented to send the artifact with the code
 *.war
 *.nar
 *.ear
