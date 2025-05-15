@@ -2,6 +2,8 @@
 
 Este repositório contém uma função AWS Lambda escrita em Kotlin, projetada para ser leve, eficiente e fácil de manter. Ideal para desenvolvedores que desejam explorar o uso de Kotlin em aplicações serverless na AWS.
 
+<br>
+
 ## 📝 Descrição do Projeto
 
 A função Lambda implementada neste projeto é responsável por processar requisições de forma rápida e escalável, utilizando o poder do Kotlin e a simplicidade do modelo serverless da AWS. Esta função foi estruturada para demonstrar as melhores práticas em desenvolvimento Kotlin para funções Lambda, incluindo:
@@ -14,6 +16,8 @@ Integração com serviços AWS, como S3 e SES.
 
 Criação de artefato com o plugin ShadowJar.
 
+<br>
+
 ## 🛠️ Tecnologias Utilizadas
 
 Kotlin - Linguagem moderna, concisa e segura.
@@ -24,9 +28,13 @@ Gradle - Ferramenta de build e empacotamento.
 
 ShadowJar - Plugin para criar artefatos executáveis.
 
+<br>
+
 ## 📚 Como Funciona
 
 A função recebe um payload, processa os dados e retorna uma resposta customizada. Ideal para APIs de baixa latência, processamento de eventos e integração com outros serviços AWS.
+
+<br>
 
 ## 🚀 Como Executar
 
