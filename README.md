@@ -32,6 +32,6 @@ A função recebe um payload, processa os dados e retorna uma resposta customiza
 
 Todo os passos para executar esse projeto, desde a parte de configuração do ambiente de desenvolvimento até a execução da Lambda estão disponíveis no [Medium](https://medium.com/@joaovittorjv/criando-fun%C3%A7%C3%B5es-lambda-com-kotlin-na-aws-guia-completo-para-seu-primeiro-projeto-1ef910fb8bb0).
 
-
+<br>
 
 👨‍💻 Desenvolvido para apresentar as grandes possibilidades do Kotlin em funções serverless para alunos de Sistemas de Informação e Análise e Desenvolvimento de Sistemas.
