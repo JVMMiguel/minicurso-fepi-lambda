@@ -32,7 +32,7 @@ class Handler(
 
     fun handleRequest(input: Map<String, Any>?, context: Context): APIGatewayProxyResponseEvent {
         val logger = LoggerUtils(context)
-
+        // comentário para teste do github actions
         return try {
             logger.info("Processing incoming request")
 
